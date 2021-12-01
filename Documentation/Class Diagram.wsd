@@ -1,0 +1,64 @@
+@startuml my-vehicle
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "My Vehicle" {
+
+  package Models {
+    class Vehicle {
+      + year : Integer
+      + make : String
+      + model : String
+      + vin : String
+    }
+
+    class FuelEntry {
+      + vin : String
+      + dateTime : Object.date
+      + fuelType: string
+      + gallonsFilled : Number
+      + gallonsUsedFilter : Number
+      + costPerGallon : Number
+      + fuelBrand: String
+    }
+  }
+  package Views { 
+    class layout
+    class index extends layout
+    class error extends layout
+  }
+
+  Package Controllers { 
+
+  }
+
+
+  package "File System" as FS <<Database>> { 
+    class "GPX files..." as TF
+  }
+
+}
+
+Controllers <.> Views
+Controllers <.> Models
+Models .> Views
+hide layout circle
+hide layout fields
+hide layout methods
+hide index circle
+hide index fields
+hide index methods
+hide error circle
+hide error fields
+hide error methods
+hide TF circle
+hide TF fields
+hide TF methods
+
+H "1..1" *-- "1..*" S
+T "many" --* "1..1" S
+'GTS --|> TF
+'MyLocation <|-- TF
+
+
+@enduml
